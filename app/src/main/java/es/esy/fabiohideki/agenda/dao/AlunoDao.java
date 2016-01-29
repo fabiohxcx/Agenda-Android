@@ -82,6 +82,19 @@ public class AlunoDao extends SQLiteOpenHelper {
         return alunos;
     }
 
+    public boolean isAlunoTelefone(String telefone) {
+
+        String[] params = {telefone};
+
+        Cursor rawQuery = getReadableDatabase().rawQuery("SELECT telefone FROM Alunos WHERE telefone = ?", params);
+
+        int total = rawQuery.getCount();
+        rawQuery.close();
+
+        return total > 0;
+    }
+
+
     public void deleta(Aluno aluno) {
         SQLiteDatabase db = getWritableDatabase();
 

@@ -3,11 +3,14 @@ package es.esy.fabiohideki.agenda;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
+
+import es.esy.fabiohideki.agenda.dao.AlunoDao;
 
 /**
  * Created by Fabio on 28/01/2016.
@@ -33,8 +36,15 @@ public class SMSReceiver extends BroadcastReceiver {
                 smsMessage[n] = SmsMessage.createFromPdu((byte[]) messages[n]);
             }
 
-            if ("+5511989474661".equals(smsMessage[n].getDisplayOriginatingAddress())) {
-                Toast.makeText(context, "SMS da Zé Flavia: " + smsMessage[n].getMessageBody(), Toast.LENGTH_LONG).show();
+            AlunoDao dao = new AlunoDao(context);
+
+
+
+            if (dao.isAlunoTelefone(smsMessage[n].getDisplayOriginatingAddress())) {
+                Toast.makeText(context, "SMS do contato: " + smsMessage[n].getMessageBody(), Toast.LENGTH_LONG).show();
+
+                MediaPlayer mp = MediaPlayer.create(context, R.raw.msg);
+                mp.start();
             }
         }
 
