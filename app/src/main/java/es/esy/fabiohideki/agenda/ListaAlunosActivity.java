@@ -9,18 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import es.esy.fabiohideki.agenda.Converter.AlunoConverter;
 import es.esy.fabiohideki.agenda.adapter.ListaAlunosAdapter;
 import es.esy.fabiohideki.agenda.dao.AlunoDao;
 import es.esy.fabiohideki.agenda.modelo.Aluno;
+import es.esy.fabiohideki.agenda.support.WebClient;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -31,6 +34,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Lista Agenda");
         setSupportActionBar(toolbar);
 
         listaAlunos = (ListView) findViewById(R.id.lista_alunos);
@@ -81,7 +85,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
         final Aluno alunoSelecionado = (Aluno) listaAlunos.getItemAtPosition(info.position);
 
@@ -170,17 +174,33 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.menu_enviar_notas:
+                AlunoDao alunoDao = new AlunoDao(this);
+                List<Aluno> alunos = alunoDao.buscaAlunos();
+                alunoDao.close();
+
+                String json = new AlunoConverter().toJson(alunos);
+
+                WebClient webClient = new WebClient();
+                String resposta = webClient.post(json);
+
+                Toast.makeText(this, resposta, Toast.LENGTH_LONG).show();
+                return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_lista_alunos, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
 }

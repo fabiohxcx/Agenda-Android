@@ -7,9 +7,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 import es.esy.fabiohideki.agenda.modelo.Aluno;
 
 /**
@@ -84,4 +81,6 @@ public class FormularioHelper {
         foto.setScaleType(ImageView.ScaleType.FIT_XY);
 
     }
+
+
 }

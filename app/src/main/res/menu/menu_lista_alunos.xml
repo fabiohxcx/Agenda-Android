@@ -1,10 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ListaAlunosActivity">
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".ListaAlunosActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/menu_mapa"
+        android:icon="@drawable/ic_mapa"
+        app:showAsAction="always"
+        android:title="Mapa"/>
+
+    <item
+        android:id="@+id/menu_receber_provas"
+        android:icon="@drawable/ic_receber"
+        app:showAsAction="ifRoom"
+        android:title="Baixar Provas"/>
+
+    <item
+        android:id="@+id/menu_enviar_notas"
+        android:icon="@drawable/ic_receber"
+        app:showAsAction="never"
+        android:title="Enviar notas"/>
+
 </menu>
