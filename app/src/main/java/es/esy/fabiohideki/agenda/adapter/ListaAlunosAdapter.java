@@ -61,6 +61,12 @@ public class ListaAlunosAdapter extends BaseAdapter {
         TextView telefone = (TextView) view.findViewById(R.id.item_telefone);
         telefone.setText("tel: " + aluno.getTelefone());
 
+        TextView site = (TextView) view.findViewById(R.id.item_site);
+
+        if (site != null) {
+            site.setText("site: " + aluno.getSite());
+        }
+
         Bitmap bm;
 
         if (aluno.getCaminhoFoto() != null) {

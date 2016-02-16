@@ -15,15 +15,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import es.esy.fabiohideki.agenda.Converter.AlunoConverter;
 import es.esy.fabiohideki.agenda.adapter.ListaAlunosAdapter;
 import es.esy.fabiohideki.agenda.dao.AlunoDao;
 import es.esy.fabiohideki.agenda.modelo.Aluno;
-import es.esy.fabiohideki.agenda.support.WebClient;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -179,19 +176,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.menu_enviar_notas:
-                AlunoDao alunoDao = new AlunoDao(this);
-                List<Aluno> alunos = alunoDao.buscaAlunos();
-                alunoDao.close();
-
-                String json = new AlunoConverter().toJson(alunos);
-
-                WebClient webClient = new WebClient();
-                String resposta = webClient.post(json);
-
-                Toast.makeText(this, resposta, Toast.LENGTH_LONG).show();
+                new EnviaAlunosTask(this).execute();
+                return true;
+            case R.id.menu_receber_provas:
+                Intent provas = new Intent(this, ProvasActivity.class);
+                startActivity(provas);
                 return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

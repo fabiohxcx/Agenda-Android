@@ -35,6 +35,7 @@ public class FormularioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         Intent intent = getIntent();
@@ -118,6 +119,9 @@ public class FormularioActivity extends AppCompatActivity {
                 dao.close();
 
                 Toast.makeText(FormularioActivity.this, "Aluno " + aluno.getNome() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case android.R.id.home:
                 finish();
                 break;
         }
