@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import es.esy.fabiohideki.agenda.fragment.DetalhesProvaFragment;
@@ -40,6 +41,7 @@ public class ProvasActivity extends AppCompatActivity {
         } else {
             transaction.replace(R.id.provas_view, new ListaProvasFragment());
             //Toast.makeText(this, "Virou phone", Toast.LENGTH_LONG).show();
+            transaction.addToBackStack(null);
         }
 
         transaction.commit();
@@ -81,5 +83,17 @@ public class ProvasActivity extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
